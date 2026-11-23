@@ -1,0 +1,204 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { img } from '../lib/img';
+
+const logos = [
+  ['2.International1.webp', 'Swedish University of Agricultural Sciences'],
+  ['2.International2.webp', 'University of Helsinki'],
+  ['2.International3.png', 'Museo Nacional de Ciencias Naturales'],
+  ['2.International4.jpg', 'University of Alcalá'],
+  ['2.International5.png', 'Aarhus University'],
+  ['2.International6.jpg', 'University of Exeter'],
+  ['2.International7.jpg', 'Stockholm University'],
+  ['2.International8.png', 'Swedish Museum of Natural History'],
+];
+
+const themes = [
+  ['community-assembly-and-subarctic-biodiversity', 'Community assembly'],
+  ['species-distribution-modelling-and-transferability', 'Species distribution modelling'],
+  ['molecular-ecology-and-pathogenpollinator-interactions', 'Molecular ecology'],
+  ['natural-history-citizen-science-and-dark-taxa', 'Natural history'],
+  ['international-collaborations', 'Collaborations'],
+];
+---
+
+<Base title="Research & Projects" description="Research by Pablo de la Peña Aguilera: community assembly in the subarctic, species distribution model transferability, bumblebee pathogens and dark taxa.">
+  <div class="container">
+    <header class="page-head">
+      <h1>Research &amp; Projects</h1>
+      <p>Take a closer look at the <strong>questions that drive my research</strong> and <strong>the projects through which I explore them</strong>.</p>
+      <nav class="chips" aria-label="Research themes">
+        {themes.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+      </nav>
+    </header>
+
+    <section class="theme reveal">
+      <h2 id="community-assembly-and-subarctic-biodiversity">Community assembly and subarctic biodiversity</h2>
+      <Photo class="diagram" src="2.CommunityAssembly.jpg" alt="Community assembly conceptual diagram" sizes="(max-width: 1160px) 100vw, 1160px" />
+      <p class="meta">PhD research · Swedish University of Agricultural Sciences · 2019–2024</p>
+      <p>
+        Understanding how ecological communities form and change is central to my research. During my PhD, I explored the
+        processes driving community assembly, particularly how environmental filtering, dispersal limitations, and resource
+        availability influence species richness and composition. My work focused on plant, fungal, and arthropod communities
+        across subarctic landscapes, examining how these processes interact to shape biodiversity across spatial and temporal scales.
+      </p>
+      <p class="selected">
+        <strong>Selected work:</strong>
+        <a href="https://doi.org/10.1002/ecs2.70581">Alpha diversity patterns are unmatched by beta diversity</a> ·
+        <a href="https://doi.org/10.1111/geb.70325">Differential patterns in β-diversity across subarctic landscapes</a> ·
+        <a href="https://doi.org/10.1111/icad.12667">Consistent imprints of elevation, soil temperature and moisture on plant and arthropod communities</a>
+      </p>
+      <p class="meta">Collaborative research · Phenology and species interactions</p>
+      <p>
+        Alongside my PhD, I contributed to collaborative projects exploring how seasonal dynamics and ecological interactions vary
+        across space and time. These include research on long-term changes in Arctic spring phenology and studies investigating the
+        spatial overlap and seasonal synchrony between insect hosts and their parasitoids. Together, these projects have broadened my
+        interests in how environmental conditions influence the timing of ecological events and the interactions between species.
+      </p>
+      <p class="selected">
+        <strong>Selected work:</strong>
+        <a href="https://www.cell.com/current-biology/fulltext/S0960-9822(23)00823-0">Little directional change in the timing of Arctic spring phenology over the past 25 years</a> ·
+        <a href="https://doi.org/10.1111/1365-2656.70228">Spatial overlap and temporal synchrony between guilds of insect hosts and parasitoids</a>
+      </p>
+    </section>
+
+    <section class="theme reveal">
+      <h2 id="species-distribution-modelling-and-transferability">Species distribution modelling and transferability</h2>
+      <Photo class="diagram" src="2.SDM.jpg" alt="Species distribution model prediction maps" sizes="(max-width: 1160px) 100vw, 1160px" />
+      <p class="meta">Postdoctoral research · MNCN-CSIC · 2025–2026</p>
+      <p>
+        Species distribution models help us understand the environmental conditions in which species occur and predict where they
+        might be found. My research focuses on <strong>how we evaluate the performance and reliability of these models</strong>,
+        particularly when they are used to predict species distributions beyond the regions where they were developed. Using
+        <strong>invasive species as case studies</strong>, I explore how different evaluation metrics influence our interpretation of
+        model performance when transferring predictions between native and introduced ranges.
+      </p>
+      <p class="selected">
+        <strong>Selected work:</strong>
+        <em>Harmonizing AUC reveals hidden biases in species distribution model transferability</em> — manuscript under revision in
+        Methods in Ecology and Evolution. · <em>Is species distribution modelling converging as a field? Consensus and divergence
+        among teams in a blinded experiment.</em> — manuscript under revision in Global Change Biology.
+      </p>
+    </section>
+
+    <section class="theme reveal">
+      <h2 id="molecular-ecology-and-pathogenpollinator-interactions">Molecular ecology and pathogen–pollinator interactions</h2>
+      <div class="trio">
+        <Photo src="2.Molecular1.jpg" alt="Research and field methods" />
+        <Photo src="2.Molecular2.jpg" alt="Molecular laboratory work" />
+        <Photo src="2.Molecular3.jpg" alt="Bumblebee specimen for molecular analysis" />
+      </div>
+      <p class="meta">Postdoctoral research · University of Alcalá · 2026–2027</p>
+      <p>
+        I use molecular tools to investigate <strong>pathogens in wild bumblebees across the Iberian Peninsula</strong>, exploring how
+        their prevalence relates to climatic conditions, landscape characteristics, and differences among hosts.
+      </p>
+      <p class="meta">Research stay · University of Helsinki · 2021–2022</p>
+      <p>
+        More broadly, I am interested in how molecular approaches can help uncover <strong>ecological interactions that might
+        otherwise go unnoticed</strong>. During my research stay at the University of Helsinki, I explored how DNA stored in honey can
+        help reveal these often-hidden interactions and provide new insights into biodiversity patterns.
+      </p>
+      <p class="selected">
+        <strong>Selected work:</strong>
+        <a href="https://doi.org/10.1002/ece3.10580">The role of seasonality in shaping honeybee interactions</a> ·
+        <a href="https://doi.org/10.1186/s12862-025-02363-1">Latitudinal richness gradients in honeybee interaction partners</a>
+      </p>
+    </section>
+
+    <section class="theme reveal">
+      <h2 id="natural-history-citizen-science-and-dark-taxa">Natural history, citizen science and dark taxa</h2>
+      <div class="trio">
+        <Photo src="2.NaturalHistory2.jpg" alt="Entomological research and specimen identification" />
+        <Photo src="2.NaturalHistory1.jpg" alt="Natural history field exploration" />
+        <Photo src="2.NaturalHistory3.jpg" alt="A carabid beetle in its habitat" />
+      </div>
+      <p>
+        Natural history and entomology have been part of my scientific interests for many years. My work in this area includes
+        <strong>taxonomy, species discovery, and the study of poorly documented organisms (often referred to as dark taxa)</strong>.
+        I am also interested in how <strong>citizen science</strong> and online biodiversity platforms can <strong>contribute to our
+        understanding of species distributions</strong> and help document overlooked biodiversity. These interests bring together my
+        ecological research and my enthusiasm for collecting, identifying, and documenting the natural world.
+      </p>
+      <p class="selected">
+        <strong>Selected work:</strong>
+        <a href="https://doi.org/10.1186/s12915-024-02010-z">Resolving biology’s dark matter</a> ·
+        <a href="https://doi.org/10.11646/zootaxa.4995.3.3">A new <em>Leistus</em> species</a> ·
+        <a href="https://doi.org/10.1111/icad.12351">Photo-sharing platforms and species distributions</a>
+      </p>
+    </section>
+
+    <section class="theme reveal">
+      <h2 id="international-collaborations">International collaborations</h2>
+      <p>
+        Collaborating with researchers from different countries and scientific backgrounds has been an important part of my career.
+        From fieldwork in remote landscapes to research stays and collaborative projects, these experiences have allowed me to
+        <strong>explore new approaches, develop different skills, and broaden my perspective on ecological research.</strong>
+      </p>
+      <ol class="timeline">
+        <li>
+          <span class="when">2020 · University of Exeter, United Kingdom</span>
+          <p>
+            Research stay with <a href="https://experts.exeter.ac.uk/3165-ilya-maclean"><strong>Prof. Ilya Maclean</strong></a>, focused on
+            microclimatic modelling and supported by a competitive research grant.
+            <strong>Related work:</strong> <a href="https://doi.org/10.1111/geb.13834">Microclimate research</a>
+          </p>
+        </li>
+        <li>
+          <span class="when">2021–2022 · University of Helsinki, Finland</span>
+          <p>
+            Research stay with <a href="https://www.umu.se/en/staff/helena-wirta/?flik=presentation"><strong>Dr Helena Wirta</strong></a>,
+            gaining hands-on experience in DNA metabarcoding, DNA extraction, qPCR, and sequencing library preparation. This collaboration
+            also contributed to research on honeybee-associated ecological interactions (see research listed above).
+            <strong>Related work:</strong>
+            <a href="https://doi.org/10.1002/ece3.10580">The role of seasonality in shaping honeybee interactions</a> ·
+            <a href="https://doi.org/10.1186/s12862-025-02363-1">Latitudinal richness gradients in honeybee interaction partners</a>
+          </p>
+        </li>
+      </ol>
+      <p>
+        Beyond these research stays, I have been fortunate to collaborate with colleagues from different institutions and countries,
+        sharing ideas, fieldwork, and research projects along the way.
+      </p>
+      <ul class="logos">
+        {logos.map(([src, alt]) => (
+          <li class="card"><Image src={img(src)} alt={alt} widths={[240]} sizes="200px" loading="lazy" /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .chips a {
+    display: inline-flex; align-items: center; min-height: 40px; padding: 0.4rem 0.95rem;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+    color: var(--ink); font-size: 0.9rem; font-weight: 500; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .chips a:hover { border-color: var(--accent); color: var(--accent); }
+
+  .theme { max-width: 900px; }
+  .theme h2 { margin-top: 2.5em; }
+  .theme :global(.diagram) { margin-bottom: 1.5rem; background: #fff; border: 1px solid var(--line); }
+  .theme :global(.diagram img) { object-fit: contain; }
+  .meta { margin: 1.5rem 0 0.4rem; color: var(--forest); font-weight: 700; }
+  .selected { padding: 0.9rem 1.1rem; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 10px 10px 0; font-size: 0.95rem; }
+
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .trio :global(.photo img) { aspect-ratio: 4 / 3; }
+
+  .logos {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem;
+    margin: 1.5rem 0 0; padding: 0; list-style: none;
+  }
+  .logos li { display: grid; place-items: center; padding: 1rem; background: #fff; aspect-ratio: 3 / 2; }
+  .logos img { max-height: 70px; width: auto; object-fit: contain; }
+
+  @media (max-width: 640px) {
+    .trio { grid-template-columns: 1fr; }
+  }
+</style>

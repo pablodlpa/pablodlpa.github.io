@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import Carousel from '../components/Carousel.astro';
+import Photo from '../components/Photo.astro';
+
+const talks: [string, string, string][] = [
+  ['2026 · IX Jornadas Científicas del Museo Nacional de Ciencias Naturales — 18th–19th March, Madrid, Spain · Oral presentation', 'Peña-Aguilera, P. & Jiménez-Valverde, A.', 'Harmonizing AUC reveals hidden biases in species distribution model transferability'],
+  ['2026 · International Biogeography Society, 12th Biennial Conference — 6th–10th January, Aarhus, Denmark · Oral presentation', 'Adam B. Smith et al.', 'Variation across species distribution models of the same species modelled by independent teams: Are we converging as a field?'],
+  ['2025 · Departmental Annual Symposium – Biogeography and Global Change — 2nd October, El Ventorrillo, Spain · Oral presentation', 'Peña-Aguilera, P.', 'Career path in Ecology and current research path'],
+  ['2024 · Spatial Foodweb Ecology Workshop — 16th–19th April, Tarfala, Sweden · Oral presentation', 'Peña-Aguilera, P.', 'Life at the Edge: Determinants of Insect, Plant, and Microbial Diversity in Subarctic Ecosystems'],
+  ['2023 · Spatial Foodweb Ecology Workshop — 30th August – 1st September, Białowieża, Poland · Oral presentation', 'Peña-Aguilera, P., Schmidt, N. M., van der Wal, R., Maclean, I. M. D. & Roslin, T.', 'Consistent imprints of microclimate on subarctic insect diversity'],
+  ['2022 · Microclimate Ecology & Biogeography Conference — 30th August – 2nd September, Antwerp, Belgium · Poster', 'Peña-Aguilera, P. & Roslin, T.', 'Microclimatic variation shapes plant and insect diversity across subarctic landscapes'],
+  ['2021 · Spatial Foodweb Ecology Workshop — 23th–25th November, Bågaskär, Finland · Oral presentation', 'Peña-Aguilera, P., Parisy, B., Stewart, L., Vesterinen, E., Wirta, H. & Roslin, T.', 'Stable Through Space: Why Insect Beta Diversity Refuses to Scale'],
+  ['2019 · XVIII Iberian Congress of Entomology — 10th–13th July, Madrid, Spain · Oral presentation', 'Peña-Aguilera, P. & Jiménez-Valverde, A.', 'Predicting the distribution of Argiope trifasciata with Bioclim and GAM: which gives more with less?'],
+  ['2019 · XVIII Iberian Congress of Entomology — 10th–13th July, Madrid, Spain · Poster', 'Rodríguez-Rey, M., Peña-Aguilera, P. & Jiménez-Valverde, A.', 'Climatic variables in species distribution models: WorldClim or Iberian Climate Atlas?'],
+];
+---
+
+<Base title="Scientific outreach" description="Talks, posters, science outreach, media coverage, organising committees and student mentoring by ecologist Pablo de la Peña Aguilera (Peña-Aguilera, P.).">
+  <div class="container narrow">
+    <header class="page-head">
+      <h1>Scientific outreach</h1>
+      <p>Scientific communication, conferences and being part of the research community.</p>
+    </header>
+
+    <section class="reveal">
+      <h2 class="first" id="international-conferences-and-workshops">International conferences and workshops</h2>
+      <ol class="timeline">
+        {talks.map(([when, who, what]) => (
+          <li>
+            <span class="when">{when}</span>
+            <p>{who} <em>{what}</em></p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="reveal">
+      <h2 id="science-dissemination">Science dissemination</h2>
+      <ul class="list">
+        <li><strong>2025 · European Researchers' Night, XVI edition</strong> — <em>La gran gymkhana científica</em>, MNCN-CSIC, Madrid, Spain · 26th September.</li>
+        <li><strong>2023 · Spatial Foodweb Ecology Workshop</strong> — <em>The use of AI in science: Pros and Caveats</em>, Białowieża, Poland · 1st September.</li>
+        <li><strong>2021 · Austertana, Norway</strong> — <em>How to sample more with less? Current methods for insect sampling</em> · 10th August.</li>
+      </ul>
+      <Carousel
+        label="Science dissemination photo gallery"
+        photos={[
+          ['5.ScienceDissemination5.jpg', 'Scientific outreach activity'],
+          ['5.ScienceDissemination2.jpg', 'Scientific outreach activity'],
+          ['5.ScienceDissemination4.jpg', 'Scientific outreach activity'],
+          ['5.ScienceDissemination1.jpg', 'Scientific outreach activity'],
+          ['5.ScienceDissemination3.jpg', 'Scientific outreach activity'],
+          ['5.ScienceDissemination6.jpg', 'Scientific outreach activity'],
+        ]}
+      />
+    </section>
+
+    <section class="reveal">
+      <h2 id="media-coverage">Media coverage</h2>
+      <ul class="list">
+        <li><strong>2024 · Sweden</strong> — <em>Subarctic species richness and distribution influenced by climate.</em> <a href="https://www.slu.se/en/news/2024/06/subarctic-species-richness-and-distribution-influenced-by-climate/">Media article</a> · 12th June.</li>
+        <li><strong>2020 · Spain</strong> — <em>Las fotos subidas a Flickr ayudan a predecir los movimientos de las especies animales en escenarios de cambio climático.</em> <a href="https://tinyurl.com/r9xfdyd">Media article</a> · 20th March.</li>
+      </ul>
+    </section>
+
+    <section class="reveal">
+      <h2 id="organising-committees">Organising committees</h2>
+      <ul class="list">
+        <li><strong>2026 · IX Jornadas Científicas del Museo Nacional de Ciencias Naturales</strong>, Madrid, Spain · 18th–19th March.</li>
+        <li><strong>2025 · Departmental Annual Symposium – Biogeography and Global Change</strong>, El Ventorrillo, Spain · 2nd October.</li>
+        <li><strong>2020 · Ecology Departmental Symposium</strong>, Uppsala, Sweden · 4th–5th November.</li>
+      </ul>
+      <Carousel
+        label="Organising committees photo gallery"
+        photos={[
+          ['5.OrganizingCommitees1.jpg', 'Departmental symposium, organising committee'],
+          ['5.OrganizingCommitees2.jpg', 'Departmental symposium, organising committee'],
+          ['5.OrganizingCommitees3.jpg', 'Scientific meeting and organising activity'],
+          ['5.OrganizingCommitees4.jpg', 'Departmental symposium, organising committee'],
+        ]}
+      />
+    </section>
+
+    <section class="reveal">
+      <h2 id="research-leadership-and-student-mentoring">Research leadership and student mentoring</h2>
+      <div class="feature">
+        <div>
+          <p>
+            I have <strong>twice coordinated international research teams across Fennoscandia and Greenland</strong>, helping organise
+            collaborative fieldwork and biodiversity sampling in remote environments.
+          </p>
+          <p>
+            I have also contributed to student supervision, including <strong>co-supervision of a bachelor's thesis</strong> and
+            <strong>co-supervision of a master's student</strong>.
+          </p>
+        </div>
+        <Photo src="5.Research_leadership.jpg" alt="" sizes="(max-width: 720px) 100vw, 400px" />
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .narrow { max-width: 960px; }
+  h2.first { margin-top: 0.5em; }
+  .list { display: grid; gap: 0.6rem; padding-left: 1.2rem; }
+  .list li::marker { color: var(--accent); }
+  .feature { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2rem; align-items: start; }
+  @media (max-width: 720px) { .feature { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,52 @@
+---
+import Photo from './Photo.astro';
+
+interface Props {
+  label: string;
+  photos: [src: string, alt: string][];
+}
+const { label, photos } = Astro.props;
+---
+
+<div class="carousel" role="region" aria-label={label}>
+  <ul class="track" tabindex="0">
+    {photos.map(([src, alt]) => <li><Photo src={src} alt={alt} sizes="(max-width: 640px) 85vw, 420px" /></li>)}
+  </ul>
+  <div class="controls">
+    <button class="prev" aria-label="Previous photos">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
+    </button>
+    <button class="next" aria-label="Next photos">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  for (const c of document.querySelectorAll<HTMLElement>('.carousel')) {
+    const track = c.querySelector<HTMLElement>('.track')!;
+    const step = () => track.clientWidth * 0.8;
+    c.querySelector('.prev')!.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    c.querySelector('.next')!.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  }
+</script>
+
+<style>
+  .carousel { margin: 1.5rem 0 1rem; }
+  .track {
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(85%, 420px); gap: 0.9rem;
+    margin: 0; padding: 0 0 0.75rem; list-style: none;
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    scrollbar-color: var(--accent) var(--line);
+  }
+  .track li { scroll-snap-align: start; }
+  .track :global(.photo img) { aspect-ratio: 4 / 3; }
+  .controls { display: flex; justify-content: flex-end; gap: 0.5rem; }
+  .controls button {
+    display: grid; place-items: center; width: 44px; height: 44px;
+    border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--forest); cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .controls button:hover { border-color: var(--accent); }
+  .controls svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>

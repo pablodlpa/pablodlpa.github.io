@@ -1,0 +1,86 @@
+---
+// Site search powered by Pagefind: the index is built after `astro build`,
+// so search works in `npm run preview` and on the deployed site, not in `npm run dev`.
+import { url } from '../lib/url';
+---
+
+<button class="icon-btn" id="search-open" aria-label="Search the site (press / )" aria-haspopup="dialog">
+  <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+</button>
+
+<dialog id="search-dialog" aria-label="Search the site" data-bundle={url('pagefind/')}>
+  <div class="search-head">
+    <h2>Search</h2>
+    <button class="close" aria-label="Close search">Esc</button>
+  </div>
+  <div id="search-ui"></div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('search-dialog') as HTMLDialogElement;
+  const openBtn = document.getElementById('search-open')!;
+  let loaded = false;
+
+  async function open() {
+    dialog.showModal();
+    if (!loaded) {
+      loaded = true;
+      const bundle = dialog.dataset.bundle!;
+      try {
+        const css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = `${bundle}pagefind-ui.css`;
+        document.head.append(css);
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = `${bundle}pagefind-ui.js`;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.append(s);
+        });
+        // @ts-ignore: global from pagefind-ui.js
+        new PagefindUI({ element: '#search-ui', showSubResults: true, resetStyles: false, bundlePath: bundle, highlightParam: 'highlight' });
+      } catch {
+        document.getElementById('search-ui')!.innerHTML =
+          '<p>Search is available after <code>npm run build</code> (try <code>npm run preview</code>).</p>';
+      }
+    }
+    dialog.querySelector<HTMLInputElement>('input')?.focus();
+  }
+
+  openBtn.addEventListener('click', open);
+  dialog.querySelector('.close')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  document.addEventListener('keydown', (e) => {
+    const typing = (e.target as HTMLElement).closest('input, textarea, select, [contenteditable]');
+    if (!typing && (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key === 'k'))) {
+      e.preventDefault();
+      open();
+    }
+  });
+</script>
+
+<style>
+  dialog {
+    width: min(100% - 2rem, 680px); max-height: min(80vh, 720px);
+    margin: 10vh auto auto; padding: 1.25rem 1.5rem 1.5rem;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface); color: var(--ink); box-shadow: 0 24px 64px rgb(0 0 0 / 0.25);
+  }
+  dialog::backdrop { background: rgb(15 26 23 / 0.55); backdrop-filter: blur(3px); }
+  .search-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+  .search-head h2 { margin: 0; font-size: 1.2rem; }
+  .close {
+    min-height: 32px; padding: 0 0.6rem; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--panel); color: var(--muted); font: 600 0.75rem var(--font-body); cursor: pointer;
+  }
+  #search-ui {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--surface);
+    --pagefind-ui-border: var(--line);
+    --pagefind-ui-tag: var(--panel);
+    --pagefind-ui-font: var(--font-body);
+    --pagefind-ui-border-radius: 10px;
+  }
+</style>

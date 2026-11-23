@@ -1,0 +1,198 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { img } from '../lib/img';
+import { url } from '../lib/url';
+
+const interests = [
+  {
+    q: 'What processes shape community assembly?',
+    a: 'From environmental filtering and dispersal to species interactions.',
+    src: '1.areasofinterest1.jpeg',
+    alt: 'Subarctic mountain valley landscape',
+  },
+  {
+    q: 'How can we better model and predict species distributions?',
+    a: 'Understanding environmental niches, evaluating species distribution models, and improving predictions across geographic regions.',
+    src: '1.areasofinterest2.jpg',
+    alt: 'Global species distribution and research connections',
+  },
+  {
+    q: 'Can we use molecular approaches to track interactions?',
+    a: 'DNA-based approaches to identify species, uncover biodiversity and explore ecological interactions.',
+    src: '1.areasofinterest3.jpg',
+    alt: 'Bumblebee visiting a flower',
+  },
+  {
+    q: 'What shapes pathogen prevalence in wild bees?',
+    a: 'Disease ecology and environmental drivers of pathogen prevalence.',
+    src: '1.areasofinterest4.jpg',
+    alt: 'Bumblebee colony',
+  },
+  {
+    q: 'What biodiversity are we still overlooking?',
+    a: 'Exploring natural history, taxonomy, and the discovery and documentation of often-neglected species.',
+    src: '1.areasofinterest5.jpg',
+    alt: 'Small beetle on a fingertip',
+  },
+];
+
+const timeline = [
+  ['2026–2027 · Postdoctoral researcher', 'University of Alcalá (UAH), Spain', 'Pathogen prevalence in wild bumblebees using molecular ecology'],
+  ['2025–2026 · Postdoctoral researcher', 'National Museum of Natural Sciences (MNCN-CSIC), Spain', 'Species distribution modelling, evaluation and transferability.'],
+  ['2024 · Field assistant', 'Zackenberg Research Station, Greenland', 'Arctic insect-plant interactions, the influence of temperature gradients on insect activity and biodiversity research.'],
+  ['2019–2024 · PhD in Biology (Ecology)', 'Swedish University of Agricultural Sciences (SLU), Uppsala, Sweden', 'Community assembly and determinants of plant, arthropod, and microbial diversity across subarctic landscapes; Research stays at Exeter University and Helsinki University.'],
+  ['2017–2019 · Research assistant', 'University of Alcalá (UAH), Spain', 'EcoGeography research group.'],
+  ['2014–2016 · MSc in Applied Ecology', 'Inland Norway University of Applied Sciences (INN), Evenstad, Norway', ''],
+  ['2009–2014 · BSc in Biology', 'University of Alcalá (UAH), Spain', ''],
+];
+---
+
+<Base title="Pablo de la Peña Aguilera">
+  <section class="hero">
+    <Image class="hero-bg" src={img('1.hero-landscape.jpg')} alt="" widths={[800, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" />
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">Ecologist · Biogeographer · Field naturalist</span>
+        <h1>Dr. Pablo de la Peña Aguilera</h1>
+        <p>
+          I am an ecologist interested in understanding how ecological communities form, how species are distributed,
+          and how environmental conditions shape biodiversity across space and time.
+        </p>
+        <p>I combine fieldwork, quantitative methods, and molecular tools to investigate these questions.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('research.html')}>Explore my research</a>
+          <a class="btn btn-light" href={url('contact.html')}>Get in touch</a>
+        </div>
+      </div>
+      <Photo class="portrait" src="1.hero-portrait.jpg" alt="Portrait during fieldwork in a mountainous landscape" sizes="(max-width: 860px) 70vw, 380px" eager />
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="reveal">
+      <span class="eyebrow">About my research</span>
+      <h2 class="first" id="connecting-biodiversity-patterns-across-scales">Connecting biodiversity patterns across scales</h2>
+      <div class="intro">
+        <div class="prose">
+          <p>
+            My research revolves around a broad question: <strong>why do species occur where they do, and what shapes the
+            ecological communities they form?</strong> I explore this question through community ecology, biogeography, species
+            distribution modelling, and molecular ecology, combining different perspectives to better understand how biodiversity
+            is distributed and how it responds to environmental change.
+          </p>
+          <p>
+            During my PhD at the Swedish University of Agricultural Sciences, I explored <strong>how microclimate, environmental
+            gradients, and ecological processes shape plant, arthropod, and microbial communities across subarctic landscapes</strong>.
+          </p>
+          <p>
+            I later joined the National Museum of Natural Sciences (MNCN-CSIC), where my research focused on <strong>the reliability
+            and transferability of species distribution models</strong>, particularly how well they predict species distributions
+            beyond the regions in which they were developed.
+          </p>
+          <p>
+            I am currently working at the University of Alcalá, investigating <strong>pathogens in wild bumblebees</strong> and
+            exploring <strong>how environmental conditions and host characteristics influence their prevalence</strong>.
+          </p>
+          <p>
+            Although these projects address different ecological questions, they share a common approach: combining
+            <strong>fieldwork, quantitative modelling, and molecular tools</strong> to better understand biodiversity. Along the way,
+            I try to keep natural history and the often-overlooked diversity of organisms within the scope of my research.
+          </p>
+        </div>
+        <div class="gallery">
+          <Photo src="1.aboutmyresearch1.jpg" alt="Entomological sample during fieldwork" caption="Pitfall sample" />
+          <Photo src="1.aboutmyresearch2.jpg" alt="Subarctic stream and mountain landscape" caption="Subarctic landscape" />
+          <Photo src="1.aboutmyresearch3.jpg" alt="Ecological sampling in the tundra" caption="Sampling malaise trap" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="eyebrow">Areas of interest</span>
+      <h2 class="first" id="questions-that-connect-my-research">Questions that connect my research</h2>
+      <ol class="interests">
+        {interests.map((it, i) => (
+          <li class="card reveal">
+            <Photo src={it.src} alt={it.alt} sizes="(max-width: 720px) 100vw, 360px" />
+            <div class="interest-body">
+              <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{it.q}</h3>
+              <p>{it.a}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <a class="btn btn-outline" href={url('research.html')}>Explore research themes and projects</a>
+    </section>
+
+    <section class="reveal">
+      <h2 id="education-and-research-experience">Education and Research Experience</h2>
+      <p class="lead">
+        A brief overview of my academic training and research appointments. The full record is in my
+        <a href={url('files/CV.pdf')}>CV (PDF)</a>.
+      </p>
+      <ol class="timeline">
+        {timeline.map(([when, where, what]) => (
+          <li>
+            <span class="when">{when}</span> — {where}
+            {what && <p>{what}</p>}
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .hero { position: relative; isolation: isolate; overflow: hidden; color: #fff; }
+  .hero :global(.hero-bg) { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 53%; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(100deg, rgb(12 33 27 / 0.92) 0%, rgb(12 33 27 / 0.7) 55%, rgb(12 33 27 / 0.35) 100%);
+  }
+  .hero-inner {
+    display: grid; grid-template-columns: 1.4fr 1fr; align-items: center; gap: clamp(2rem, 5vw, 4rem);
+    padding: clamp(3rem, 9vw, 6.5rem) 0;
+  }
+  .hero h1 { color: #fff; }
+  .hero .eyebrow { color: #b9dcc8; }
+  .hero p { max-width: 58ch; color: rgb(255 255 255 / 0.9); font-size: 1.1rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+  .hero :global(.portrait) {
+    aspect-ratio: 4 / 5; max-width: 380px; justify-self: end;
+    border: 4px solid rgb(255 255 255 / 0.85); box-shadow: 0 24px 60px rgb(0 0 0 / 0.35);
+  }
+
+  section { padding-top: clamp(3rem, 7vw, 5rem); }
+  h2.first { margin-top: 0; }
+  .intro { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+  .prose { max-width: 68ch; }
+  .gallery { display: grid; gap: 1rem; }
+  .gallery :global(.photo img) { aspect-ratio: 3 / 2; }
+
+  .interests {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem;
+    margin: 0 0 2rem; padding: 0; list-style: none;
+  }
+  .interests li { overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+  .interests li:hover { transform: translateY(-3px); }
+  .interests :global(.photo) { border-radius: 0; }
+  .interests :global(.photo img) { aspect-ratio: 16 / 10; }
+  .interest-body { padding: 1.25rem 1.4rem 1.5rem; }
+  .interest-body h3 { margin-bottom: 0.5rem; }
+  .interest-body p { margin: 0; color: var(--muted); }
+  .num { display: block; margin-bottom: 0.4rem; color: var(--eyebrow); font: 700 0.8rem var(--font-body); letter-spacing: 0.12em; }
+
+  .lead { color: var(--muted); max-width: 65ch; }
+
+  @media (max-width: 860px) {
+    .hero-inner, .intro { grid-template-columns: 1fr; }
+    .hero :global(.portrait) { justify-self: start; max-width: 260px; }
+    .gallery { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .gallery { grid-template-columns: 1fr; }
+  }
+</style>

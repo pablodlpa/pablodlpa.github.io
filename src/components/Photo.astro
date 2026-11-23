@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import { img } from '../lib/img';
+
+interface Props {
+  src: string; // file name inside src/assets/images
+  alt: string;
+  caption?: string;
+  sizes?: string;
+  class?: string;
+  eager?: boolean;
+}
+
+const { src, alt, caption, sizes = '(max-width: 720px) 100vw, 400px', class: cls, eager = false } = Astro.props;
+---
+
+<figure class:list={['photo', cls]}>
+  <Image
+    src={img(src)}
+    alt={alt}
+    widths={[400, 800, 1200]}
+    sizes={sizes}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

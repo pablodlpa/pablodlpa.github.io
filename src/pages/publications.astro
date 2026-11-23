@@ -1,0 +1,348 @@
+---
+import Base from '../layouts/Base.astro';
+import { publications, authorList } from '../data/publications';
+
+const ME = 'Peña-Aguilera, P.';
+
+const items = publications.map((p, order) => ({
+  ...p,
+  order,
+  authorNames: authorList(p.authors),
+  // Stable anchor per paper, so site search can link straight to it.
+  id: p.title.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60),
+}));
+
+// Facet values with how many papers carry each one.
+function facet(values: string[][], byCount = false) {
+  const counts = new Map<string, number>();
+  for (const v of values.flat()) counts.set(v, (counts.get(v) ?? 0) + 1);
+  return [...counts].sort(([a, x], [b, y]) => (byCount ? y - x || a.localeCompare(b) : b.localeCompare(a)));
+}
+const facets = [
+  { key: 'author', label: 'Author', values: facet(items.map((p) => p.authorNames), true) },
+  { key: 'year', label: 'Year', values: facet(items.map((p) => (p.year ? [String(p.year)] : []))) },
+  { key: 'venue', label: 'Journal', values: facet(items.map((p) => [p.venue]), true) },
+];
+
+// Titles are trusted local data: only *italics* are converted.
+const italics = (s: string) => s.replace(/\*(.+?)\*/g, '<em>$1</em>');
+const authors = (s: string) => s.replace(ME, `<strong>${ME}</strong>`);
+---
+
+<Base title="Publications" description="Publications by Pablo de la Peña Aguilera (Peña-Aguilera, P.) on beta diversity, species distribution models, subarctic insects and honeybee interactions.">
+  <div class="container narrow">
+    <header class="page-head">
+      <h1>Publications</h1>
+      <p>Research articles and manuscripts. {items.length} entries.</p>
+    </header>
+
+    <div class="toolbar" data-pagefind-ignore>
+      <div class="row">
+        <label for="pub-filter" class="sr-only">Filter publications by text</label>
+        <input id="pub-filter" type="search" placeholder="Filter by title, author, journal or year…" autocomplete="off" />
+        <label class="sort">
+          <span>Sort</span>
+          <select id="pub-sort">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="title">Title A–Z</option>
+            <option value="venue">Journal A–Z</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="facets">
+        {facets.map((f) => (
+          <details class="facet" data-facet={f.key}>
+            <summary>{f.label}<span class="picked" hidden></span></summary>
+            <div class="menu">
+              {f.key === 'author' && (
+                <input class="facet-find" type="search" placeholder="Find an author…" aria-label="Find an author" autocomplete="off" />
+              )}
+              <ul>
+                {f.values.map(([value, n]) => (
+                  <li>
+                    <label>
+                      <input type="checkbox" value={value} />
+                      <span class="value">{value}</span>
+                      <span class="n">{n}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <div class="active" hidden>
+        <ul class="chips" aria-label="Active filters"></ul>
+        <button class="clear" type="button">Clear all</button>
+      </div>
+      <p class="count" aria-live="polite"></p>
+    </div>
+
+    <ol class="pubs">
+      {items.map((p) => (
+        <li
+          class="pub card"
+          data-order={p.order}
+          data-author={p.authorNames.join('|')}
+          data-year={p.year ?? ''}
+          data-venue={p.venue}
+          data-title={p.title.replace(/\*/g, '')}
+        >
+          <p class="authors" set:html={authors(p.authors)} />
+          <h2 id={p.id} class="pub-title" set:html={italics(p.title)} />
+          <p class="venue">
+            <em>{p.venue}</em>{p.details && `, ${p.details}`}{p.year && ` · ${p.year}`}{p.status === 'in-review' && ' (manuscript under revision)'}
+          </p>
+          {p.url && <a class="doi" href={p.url}>{p.url.replace('https://', '')}</a>}
+        </li>
+      ))}
+    </ol>
+    <p class="empty" hidden>No publications match these filters. <button class="clear" type="button">Clear all filters</button></p>
+
+    <h2 id="peer-review-activity">Peer review activity</h2>
+    <p>
+      I have served as a manuscript reviewer for scientific journals including
+      <a href="https://journals.ku.edu/jbi/about"><strong>Biodiversity Informatics</strong></a> and
+      <a href="https://www.nature.com/npjbiodivers/journal-impact"><strong>npj Biodiversity</strong></a>.
+    </p>
+  </div>
+</Base>
+
+<script>
+  // Faceted filtering: OR within a facet, AND across facets. State lives in the URL so filtered views can be shared.
+  const KEYS = ['author', 'year', 'venue'] as const;
+  type Key = (typeof KEYS)[number];
+  const LABELS: Record<Key, string> = { author: 'Author', year: 'Year', venue: 'Journal' };
+
+  const list = document.querySelector<HTMLOListElement>('.pubs')!;
+  const items = [...list.querySelectorAll<HTMLLIElement>('.pub')];
+  const text = document.getElementById('pub-filter') as HTMLInputElement;
+  const sort = document.getElementById('pub-sort') as HTMLSelectElement;
+  const facets = [...document.querySelectorAll<HTMLDetailsElement>('.facet')];
+  const active = document.querySelector<HTMLElement>('.active')!;
+  const chips = active.querySelector('.chips')!;
+  const count = document.querySelector('.count')!;
+  const empty = document.querySelector<HTMLElement>('.empty')!;
+  const state = Object.fromEntries(KEYS.map((k) => [k, new Set<string>()])) as Record<Key, Set<string>>;
+
+  const boxes = (k: Key) => [...document.querySelectorAll<HTMLInputElement>(`.facet[data-facet="${k}"] input[type=checkbox]`)];
+  const valuesOf = (li: HTMLElement, k: Key) => (k === 'author' ? li.dataset.author!.split('|') : [li.dataset[k]!]);
+  const yearOf = (li: HTMLElement) => Number(li.dataset.year) || Infinity; // manuscripts without a year count as newest
+  const order = (a: HTMLElement, b: HTMLElement) => Number(a.dataset.order) - Number(b.dataset.order);
+
+  const sorters: Record<string, (a: HTMLElement, b: HTMLElement) => number> = {
+    newest: (a, b) => (yearOf(a) === yearOf(b) ? order(a, b) : yearOf(b) > yearOf(a) ? 1 : -1),
+    oldest: (a, b) => (yearOf(a) === yearOf(b) ? order(a, b) : yearOf(a) > yearOf(b) ? 1 : -1),
+    title: (a, b) => a.dataset.title!.localeCompare(b.dataset.title!),
+    venue: (a, b) => a.dataset.venue!.localeCompare(b.dataset.venue!) || sorters.newest(a, b),
+  };
+
+  function chip(key: string, value: string, onRemove: () => void) {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip';
+    b.setAttribute('aria-label', `Remove filter ${key} ${value}`);
+    const k = document.createElement('span');
+    k.className = 'chip-key';
+    k.textContent = key;
+    const x = document.createElement('span');
+    x.setAttribute('aria-hidden', 'true');
+    x.textContent = '×';
+    b.append(k, ` ${value} `, x);
+    b.addEventListener('click', onRemove);
+    li.append(b);
+    return li;
+  }
+
+  function render() {
+    const q = text.value.trim().toLowerCase();
+    const passes = (li: HTMLElement, skip?: Key) =>
+      KEYS.every((k) => k === skip || !state[k].size || valuesOf(li, k).some((v) => state[k].has(v))) &&
+      (!q || li.textContent!.toLowerCase().includes(q));
+    let shown = 0;
+    for (const li of items) {
+      li.hidden = !passes(li);
+      if (!li.hidden) shown++;
+    }
+    // Live counts: how many results each option would give with the other filters applied.
+    for (const k of KEYS) {
+      const counts = new Map<string, number>();
+      for (const li of items) if (passes(li, k)) for (const v of valuesOf(li, k)) counts.set(v, (counts.get(v) ?? 0) + 1);
+      for (const b of boxes(k)) {
+        const n = counts.get(b.value) ?? 0;
+        b.closest('label')!.querySelector('.n')!.textContent = String(n);
+        b.closest('label')!.classList.toggle('none', n === 0 && !b.checked);
+      }
+    }
+    list.append(...[...items].sort(sorters[sort.value]));
+
+    chips.replaceChildren(
+      ...KEYS.flatMap((k) => [...state[k]].map((v) => chip(`${LABELS[k]}:`, v, () => (state[k].delete(v), sync())))),
+      ...(q ? [chip('Text:', `“${text.value.trim()}”`, () => ((text.value = ''), sync()))] : []),
+    );
+    const filtering = chips.childElementCount > 0;
+    active.hidden = !filtering;
+    empty.hidden = shown > 0;
+    count.textContent = filtering ? `${shown} of ${items.length} publications` : '';
+    for (const f of facets) {
+      const n = state[f.dataset.facet as Key].size;
+      const badge = f.querySelector<HTMLElement>('.picked')!;
+      badge.hidden = !n;
+      badge.textContent = String(n);
+    }
+  }
+
+  // Push state to checkboxes and URL, then re-render.
+  function sync() {
+    for (const k of KEYS) for (const b of boxes(k)) b.checked = state[k].has(b.value);
+    const params = new URLSearchParams();
+    if (text.value.trim()) params.set('q', text.value.trim());
+    if (sort.value !== 'newest') params.set('sort', sort.value);
+    for (const k of KEYS) for (const v of state[k]) params.append(k, v);
+    const qs = params.toString();
+    history.replaceState(null, '', `${location.pathname}${qs ? `?${qs}` : ''}${location.hash}`);
+    render();
+  }
+
+  // Restore a shared or bookmarked view from the URL.
+  const params = new URLSearchParams(location.search);
+  for (const k of KEYS) for (const v of params.getAll(k)) state[k].add(v);
+  text.value = params.get('q') ?? '';
+  if (sorters[params.get('sort') ?? '']) sort.value = params.get('sort')!;
+  if (params.has('q') || params.has('sort') || KEYS.some((k) => params.has(k))) sync();
+  else {
+    // Browsers may restore checkbox ticks on reload; the URL is the source of truth.
+    for (const k of KEYS) for (const b of boxes(k)) b.checked = false;
+    render();
+  }
+
+  for (const k of KEYS) {
+    for (const b of boxes(k)) {
+      b.addEventListener('change', () => {
+        if (b.checked) state[k].add(b.value);
+        else state[k].delete(b.value);
+        sync();
+      });
+    }
+  }
+  text.addEventListener('input', sync);
+  sort.addEventListener('change', sync);
+  for (const c of document.querySelectorAll('.clear')) {
+    c.addEventListener('click', () => {
+      for (const k of KEYS) state[k].clear();
+      text.value = '';
+      sync();
+    });
+  }
+
+  // Dropdowns: one open at a time, close on outside click or Escape.
+  for (const f of facets) {
+    f.addEventListener('toggle', () => {
+      if (f.open) for (const o of facets) if (o !== f) o.open = false;
+    });
+    f.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && f.open) {
+        f.open = false;
+        f.querySelector('summary')!.focus();
+      }
+    });
+  }
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('.facet')) for (const f of facets) f.open = false;
+  });
+
+  // Narrow the long author list while typing.
+  const find = document.querySelector<HTMLInputElement>('.facet-find');
+  find?.addEventListener('input', () => {
+    const q = find.value.trim().toLowerCase();
+    for (const b of boxes('author')) b.closest('li')!.hidden = !!q && !b.value.toLowerCase().includes(q);
+  });
+</script>
+
+<style>
+  .narrow { max-width: 900px; }
+
+  .toolbar {
+    position: sticky; top: 64px; z-index: 10;
+    display: grid; gap: 0.7rem;
+    margin: 0 -0.5rem 1.25rem; padding: 0.75rem 0.5rem; background: var(--paper);
+  }
+  .row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+  input[type='search'], select {
+    min-height: 44px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 0.95rem;
+  }
+  #pub-filter { flex: 1 1 260px; padding: 0 1rem; border-radius: 999px; }
+  .sort { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+  select { padding: 0 0.9rem; border-radius: 999px; cursor: pointer; }
+
+  .facets { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .facet { position: relative; }
+  .facet summary {
+    display: inline-flex; align-items: center; gap: 0.4rem; min-height: 40px; padding: 0 0.95rem;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+    color: var(--ink); font-size: 0.9rem; font-weight: 600; cursor: pointer; list-style: none; user-select: none;
+    transition: border-color 0.2s;
+  }
+  .facet summary::-webkit-details-marker { display: none; }
+  .facet summary::after {
+    content: ""; width: 7px; height: 7px; margin-left: 0.15rem;
+    border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.2s var(--ease);
+  }
+  .facet[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+  .facet summary:hover, .facet[open] summary { border-color: var(--accent); }
+  .picked {
+    display: inline-grid; place-items: center; min-width: 1.3rem; height: 1.3rem; padding: 0 0.3rem;
+    border-radius: 999px; background: var(--forest-2); color: #fff; font-size: 0.72rem;
+  }
+  .picked[hidden] { display: none; }
+  .menu {
+    position: absolute; top: calc(100% + 6px); left: 0; z-index: 20;
+    width: max-content; min-width: 220px; max-width: min(320px, 85vw); padding: 0.5rem;
+    border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow);
+  }
+  .facet:last-child .menu { left: auto; right: 0; }
+  .facet-find { width: 100%; margin-bottom: 0.4rem; padding: 0 0.8rem; border-radius: 8px; }
+  .menu ul { max-height: 280px; margin: 0; padding: 0; overflow-y: auto; list-style: none; overscroll-behavior: contain; }
+  .menu label {
+    display: flex; align-items: center; gap: 0.6rem; min-height: 40px; padding: 0.25rem 0.5rem;
+    border-radius: 8px; font-size: 0.9rem; cursor: pointer;
+  }
+  .menu label:hover { background: var(--panel); }
+  .menu label.none { opacity: 0.45; }
+  .menu input[type='checkbox'] { width: 18px; height: 18px; accent-color: var(--forest-2); flex: none; }
+  .value { flex: 1; }
+  .n { color: var(--muted); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+
+  .active { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .active[hidden] { display: none; }
+  .chips { display: contents; list-style: none; }
+  .chips :global(.chip) {
+    display: inline-flex; align-items: center; gap: 0.3rem; min-height: 34px; padding: 0 0.75rem;
+    border: 0; border-radius: 999px; background: var(--panel); color: var(--forest);
+    font: 500 0.85rem var(--font-body); cursor: pointer; transition: background-color 0.2s;
+  }
+  .chips :global(.chip:hover) { background: var(--line); }
+  .chips :global(.chip-key) { color: var(--muted); font-weight: 600; }
+  .clear {
+    min-height: 34px; padding: 0 0.5rem; border: 0; background: none;
+    color: var(--accent); font: 600 0.85rem var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+  }
+  .count { margin: 0; color: var(--muted); font-size: 0.85rem; }
+  .count:empty { display: none; }
+
+  .pubs { display: grid; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+  .pub { padding: 1.1rem 1.3rem; box-shadow: none; transition: border-color 0.2s; }
+  .pub:hover { border-color: var(--accent); }
+  .pub-title { margin: 0.2rem 0 0.35rem; font-size: 1.05rem; line-height: 1.45; letter-spacing: -0.01em; scroll-margin-top: 240px; }
+  .authors, .venue { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  .authors :global(strong) { color: var(--ink); }
+  .doi { display: inline-block; margin-top: 0.35rem; font-size: 0.85rem; word-break: break-all; }
+  .empty { color: var(--muted); }
+  .empty .clear { padding: 0; }
+</style>

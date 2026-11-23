@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { url } from '../lib/url';
+
+const EMAIL = 'pena.aguilera.p@gmail.com';
+// Set PUBLIC_FORM_ENDPOINT (see .env.example) to deliver messages through a form service.
+// Without it the form opens the visitor's mail app with the message pre-filled.
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+
+<Base title="Contact" description="Contact Pablo de la Peña Aguilera, postdoctoral ecologist at the University of Alcalá, about collaborations, research projects or his CV.">
+  <div class="container">
+    <header class="page-head">
+      <h1>Contact</h1>
+      <p>If you are interested in collaborating, please send a short description of the project or research question.</p>
+    </header>
+
+    <div class="layout">
+      <form class="card form" action={endpoint || `mailto:${EMAIL}`} method="post" data-endpoint={endpoint} data-email={EMAIL} novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" autocomplete="name" required />
+          <p class="error" id="name-error">Please tell me your name.</p>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-help" />
+          <p class="help" id="email-help">I will only use it to reply to you.</p>
+          <p class="error" id="email-error">Please enter a valid email address.</p>
+        </div>
+        <div class="field">
+          <label for="subject">Subject <span class="optional">(optional)</span></label>
+          <input id="subject" name="subject" />
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+          <p class="error" id="message-error">Please write a short message.</p>
+        </div>
+        <!-- Honeypot: humans never see or fill this field. -->
+        <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button class="btn btn-primary" type="submit">Send message</button>
+        <p class="status" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="side">
+        <Photo src="6.Contact.jpg" alt="" sizes="(max-width: 860px) 100vw, 380px" />
+        <div class="card details">
+          <h2>Pablo de la Peña Aguilera</h2>
+          <p><strong>Postdoctoral researcher</strong><br />University of Alcalá, Spain</p>
+          <ul>
+            <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+            <li><a href="https://orcid.org/0000-0002-8999-1140">ORCID</a></li>
+            <li><a href="https://www.researchgate.net/profile/Pablo-De-La-Pena-Aguilera">ResearchGate</a></li>
+          </ul>
+          <a class="btn btn-outline" href={url('files/CV.pdf')} download="CV_Pablo_de_la_Pena_Aguilera.pdf">Download CV (PDF)</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form.form')!;
+  const status = form.querySelector('.status')!;
+  const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+
+  function validate() {
+    let firstInvalid: HTMLElement | null = null;
+    for (const el of form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')) {
+      const ok = el.checkValidity() && el.value.trim() !== '';
+      el.setAttribute('aria-invalid', String(!ok));
+      const err = form.querySelector(`#${el.id}-error`);
+      if (err) el.setAttribute('aria-errormessage', err.id);
+      if (!ok && !firstInvalid) firstInvalid = el;
+    }
+    firstInvalid?.focus();
+    return !firstInvalid;
+  }
+
+  form.addEventListener('input', (e) => {
+    const el = e.target as HTMLInputElement;
+    if (el.getAttribute('aria-invalid') === 'true' && el.checkValidity()) el.setAttribute('aria-invalid', 'false');
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    const data = new FormData(form);
+    if (data.get('_gotcha')) return;
+
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) {
+      const subject = String(data.get('subject') || 'Website enquiry');
+      const body = `${data.get('message')}\n\n— ${data.get('name')} <${data.get('email')}>`;
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      status.textContent = 'Opening your email app…';
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Sending…';
+    try {
+      const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      status.textContent = 'Thank you! Your message has been sent.';
+    } catch {
+      status.textContent = `Sorry, the message could not be sent. Please email ${form.dataset.email} directly.`;
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Send message';
+    }
+  });
+</script>
+
+<style>
+  .layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .form { display: grid; gap: 1.1rem; padding: clamp(1.25rem, 3vw, 2rem); }
+  .field { display: grid; gap: 0.35rem; }
+  label { font-weight: 600; color: var(--forest); }
+  .optional { color: var(--muted); font-weight: 400; }
+  input, textarea {
+    width: 100%; min-height: 46px; padding: 0.65rem 0.9rem;
+    border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink);
+    font: inherit; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea { resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+  [aria-invalid='true'] { border-color: #c0392b; }
+  .help { margin: 0; color: var(--muted); font-size: 0.85rem; }
+  .error { display: none; margin: 0; color: #b3261e; font-size: 0.85rem; font-weight: 500; }
+  :global([data-theme='dark']) .error { color: #ffb4ab; }
+  [aria-invalid='true'] ~ .error { display: block; }
+  .hp { position: absolute; left: -9999px; }
+  .form .btn { justify-self: start; }
+  .status { margin: 0; color: var(--forest); font-weight: 600; }
+  .status:empty { display: none; }
+
+  .side { display: grid; gap: 1rem; }
+  .side :global(.photo img) { aspect-ratio: 4 / 3; }
+  .details { padding: 1.5rem; }
+  .details h2 { margin: 0 0 0.5rem; font-size: 1.2rem; }
+  .details ul { margin: 0 0 1.25rem; padding: 0; list-style: none; display: grid; gap: 0.3rem; }
+
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+</style>
