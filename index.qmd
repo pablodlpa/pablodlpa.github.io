@@ -79,14 +79,14 @@ Although these projects address different ecological questions, they share a com
 **What processes shape community assembly?**
 
 From environmental filtering and dispersal to species interactions.
-<img src="images/1.areasofinterest1.jpeg" alt="Subarctic mountain valley landscape" class="assembly-photo" loading="lazy">
+<img src="images/1.areasofinterest1.png" alt="Subarctic mountain valley landscape" class="assembly-photo" loading="lazy">
 :::
 ::: {.interest-card}
 <span class="interest-number">02</span>
 **How can we better model and predict species distributions?**
 
 Understanding environmental niches, evaluating species distribution models, and improving predictions across geographic regions.
-<img src="images/1.areasofinterest2.jpg" alt="Global species distribution and research connections" loading="lazy">
+<img src="images/1.areasofinterest2.png" alt="Global species distribution and research connections" loading="lazy">
 :::
 ::: {.interest-card}
 <span class="interest-number">03</span>
@@ -94,21 +94,21 @@ Understanding environmental niches, evaluating species distribution models, and 
 
 DNA-based approaches to identify species, uncover biodiversity and explore ecological interactions.
 <!--![Molecular ecology](images/1.areasofinterest3.jpg){.molecular-photo}-->
-<img src="images/1.areasofinterest3.jpg" alt="Bumblebee visiting a flower" class="molecular-photo" loading="lazy">
+<img src="images/1.areasofinterest3.png" alt="Bumblebee visiting a flower" class="molecular-photo" loading="lazy">
 :::
 ::: {.interest-card}
 <span class="interest-number">04</span>
 **What shapes pathogen prevalence in wild bees?**
 
 Disease ecology and environmental drivers of pathogen prevalence.
-<img src="images/1.areasofinterest4.jpg" alt="Bumblebee colony" class="prevalence-photo" loading="lazy">
+<img src="images/1.areasofinterest4.png" alt="Bumblebee colony" class="prevalence-photo" loading="lazy">
 :::
 ::: {.interest-card}
 <span class="interest-number">05</span>
 **What biodiversity are we still overlooking?**
 
 Exploring natural history, taxonomy, and the discovery and documentation of often-neglected species.
-<img src="images/1.areasofinterest5.jpg" alt="Small beetle on a fingertip" loading="lazy">
+<img src="images/1.areasofinterest5.png" alt="Small beetle on a fingertip" loading="lazy">
 :::
 :::
 
