@@ -51,18 +51,15 @@ Although these projects address different ecological questions, they share a com
 ::: {.intro-gallery}
 
 <figure class="intro-photo-card">
-  <img src="images/1.aboutmyresearch1.jpg" alt="Entomological sample during fieldwork" loading="lazy">
-  <figcaption>Pitfall sample</figcaption>
+  <img src="images/1.aboutmyresearch1.png" alt="Entomological sample during fieldwork" loading="lazy">
 </figure>
 
 <figure class="intro-photo-card">
   <img src="images/1.aboutmyresearch2.jpg" alt="Subarctic stream and mountain landscape" loading="lazy">
-  <figcaption>Subarctic landscape</figcaption>
 </figure>
 
 <figure class="intro-photo-card">
-  <img src="images/1.aboutmyresearch3.jpg" alt="Ecological sampling in the tundra" loading="lazy">
-  <figcaption>Sampling malaise trap</figcaption>
+  <img src="images/1.aboutmyresearch3.png" alt="Ecological sampling in the tundra" loading="lazy">
 </figure>
 
 :::
@@ -74,49 +71,70 @@ Although these projects address different ecological questions, they share a com
 ## Questions that connect my research
 
 ::: {.interest-grid}
-::: {.interest-card}
-<span class="interest-number">01</span>
-**What processes shape community assembly?**
 
-From environmental filtering and dispersal to species interactions.
-<img src="images/1.areasofinterest1.png" alt="Subarctic mountain valley landscape" class="assembly-photo" loading="lazy">
-:::
 ::: {.interest-card}
-<span class="interest-number">02</span>
-**How can we better model and predict species distributions?**
-
-Understanding environmental niches, evaluating species distribution models, and improving predictions across geographic regions.
-<img src="images/1.areasofinterest2.png" alt="Global species distribution and research connections" loading="lazy">
+<div class="interest-photo">
+  <img src="images/1.areasofinterest1.png" alt="Subarctic mountain landscape" loading="lazy">
+</div>
+<div class="interest-card-body">
+  <span class="interest-number">01</span>
+  <h3>What processes shape community assembly?</h3>
+  <p>From environmental filtering and dispersal to species interactions.</p>
+</div>
 :::
+
 ::: {.interest-card}
-<span class="interest-number">03</span>
-**Can we use molecular approaches to track interactions?**
-
-DNA-based approaches to identify species, uncover biodiversity and explore ecological interactions.
-<!--![Molecular ecology](images/1.areasofinterest3.jpg){.molecular-photo}-->
-<img src="images/1.areasofinterest3.png" alt="Bumblebee visiting a flower" class="molecular-photo" loading="lazy">
+<div class="interest-photo">
+  <img src="images/1.areasofinterest2.png" alt="Global species distributions" loading="lazy">
+</div>
+<div class="interest-card-body">
+  <span class="interest-number">02</span>
+  <h3>How can we better model and predict species distributions?</h3>
+  <p>Understanding environmental niches, evaluating species distribution models, and improving predictions across geographic regions.</p>
+</div>
 :::
+
 ::: {.interest-card}
-<span class="interest-number">04</span>
-**What shapes pathogen prevalence in wild bees?**
-
-Disease ecology and environmental drivers of pathogen prevalence.
-<img src="images/1.areasofinterest4.png" alt="Bumblebee colony" class="prevalence-photo" loading="lazy">
+<div class="interest-photo">
+  <img src="images/1.areasofinterest3.png" class="molecular-photo" alt="Spider preying on a bee on a flower" loading="lazy">
+</div>
+<div class="interest-card-body">
+  <span class="interest-number">03</span>
+  <h3>Can we use molecular approaches to track interactions?</h3>
+  <p>DNA-based approaches to identify species, uncover biodiversity and explore ecological interactions.</p>
+</div>
 :::
+
 ::: {.interest-card}
-<span class="interest-number">05</span>
-**What biodiversity are we still overlooking?**
+<div class="interest-photo">
+  <img src="images/1.areasofinterest4.png" alt="Bumblebee colony in an experimental enclosure" loading="lazy">
+</div>
+<div class="interest-card-body">
+  <span class="interest-number">04</span>
+  <h3>What shapes pathogen prevalence in wild bees?</h3>
+  <p>Disease ecology and environmental drivers of pathogen prevalence.</p>
+</div>
+:::
 
-Exploring natural history, taxonomy, and the discovery and documentation of often-neglected species.
-<img src="images/1.areasofinterest5.png" alt="Small beetle on a fingertip" loading="lazy">
+::: {.interest-card}
+<div class="interest-photo">
+  <img src="images/1.areasofinterest5.png" alt="Tiny pseudoscorpion on a fingernail" loading="lazy">
+</div>
+<div class="interest-card-body">
+  <span class="interest-number">05</span>
+  <h3>What biodiversity are we still overlooking?</h3>
+  <p>Exploring natural history, taxonomy, and the discovery and documentation of often-neglected species.</p>
+</div>
 :::
+
 :::
+
 
 [Explore research themes and projects](research.qmd){.btn .btn-outline-primary}
 
 ## Education and Research Experience
 
-A brief overview of my academic training and research appointments. The full record is available on my [Contact page](contact.qmd), where you can also download the PDF.
+A brief overview of my academic training and research appointments.
 
 ::: {.timeline}
 ::: {.timeline-entry}

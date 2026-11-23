@@ -12,7 +12,7 @@ Take a closer look at the **questions that drive my research** and **the project
 <!-- Image above; full-width text below. See style.css > RESEARCH. -->
 ::: {.research-section}
 ::: {.research-gallery .research-gallery-single .research-gallery-diagram}
-<img src="images/2.CommunityAssembly.jpg" alt="Community assembly conceptual diagram" loading="lazy">
+<img src="images/2. Community assembly.png" alt="Community assembly conceptual diagram" loading="lazy">
 :::
 
 ::: {.research-text}
@@ -37,7 +37,7 @@ Alongside my PhD, I contributed to collaborative projects exploring how seasonal
 <!-- Image above; full-width text below. See style.css > RESEARCH. -->
 ::: {.research-section}
 ::: {.research-gallery .research-gallery-single .research-gallery-diagram}
-<img src="images/2.SDM.jpg" alt="Species distribution model prediction maps" loading="lazy">
+<img src="images/2.SDM.png" alt="Species distribution model prediction maps" loading="lazy">
 :::
 
 ::: {.research-text}
@@ -54,9 +54,17 @@ Species distribution models help us understand the environmental conditions in w
 <!-- Image above; full-width text below. See style.css > RESEARCH. -->
 ::: {.research-section}
 ::: {.research-gallery .research-gallery-three}
-<figure class="research-photo"><img src="images/2.Molecular1.jpg" alt="Research and field methods" loading="lazy"></figure>
+<figure class="research-photo">
+  <img src="images/2.Molecular1.jpg"
+       alt="Research and field methods"
+       loading="lazy">
+</figure>
 
-<figure class="research-photo"><img src="images/2.Molecular2.jpg" alt="Molecular laboratory work" loading="lazy"></figure>
+<figure class="research-photo">
+  <img src="images/2.Molecular2.jpg"
+       alt="Molecular laboratory work"
+       loading="lazy">
+</figure>
 
 <figure class="research-photo molecular-closeup">
   <img src="images/2.Molecular3.jpg"
@@ -105,7 +113,7 @@ More broadly, I am interested in how molecular approaches can help uncover **eco
 :::
 
 ::: {.research-text}
-Natural history and entomology have been part of my scientific interests for many years. My work in this area includes **taxonomy, species discovery, and the study of poorly documented organisms (often referred to as dark taxa)**. I am also interested in how **citizen science** and online biodiversity platforms can **contribute to our understanding of species distributions** and help document overlooked biodiversity. These interests bring together my ecological research and my enthusiasm for collecting, identifying, and documenting the natural world.
+Natural history and entomology have been part of my scientific interests for many years. My work in this area includes **taxonomy, species discovery, and the study of poorly documented organisms (often referred to as dark taxa)**, alongside hands-on experience in **beetle identification (Coleoptera)**, particularly within the **family Carabidae**. I am also interested in how **citizen science** and online biodiversity platforms can **contribute to our understanding of species distributions** and help document overlooked biodiversity. These interests bring together my ecological research and my enthusiasm for collecting, identifying, and documenting the natural world.
 
 **Selected work:** [Resolving biology’s dark matter](https://doi.org/10.1186/s12915-024-02010-z) · [A new *Leistus* species](https://www.researchgate.net/profile/Vicente-Ortuno/publication/352891761_A_case_of_allopatric_speciation_in_the_Central_System_Iberian_Peninsula_Leistus_elpis_sp_nov_a_sibling_species_of_Leistus_constrictus_Coleoptera_Carabidae/links/649ee3a2c41fb852dd4292aa/A-case-of-allopatric-speciation-in-the-Central-System-Iberian-Peninsula-Leistus-elpis-sp-nov-a-sibling-species-of-Leistus-constrictus-Coleoptera-Carabidae.pdf) · [Photo-sharing platforms and species distributions](https://doi.org/10.1111/icad.12351)
 :::

@@ -75,16 +75,16 @@ Rodríguez-Rey, M., Peña-Aguilera, P. & Jiménez-Valverde, A. *Climatic variabl
 <img src="images/5.ScienceDissemination2.jpg" alt="Scientific outreach activity photograph" loading="lazy">
 </figure>
 <figure class="outreach-carousel-slide">
-<img src="images/5.ScienceDissemination4.jpg" alt="Scientific outreach activity photograph" loading="lazy">
+<img src="images/5.ScienceDissemination4.png" alt="Scientific outreach activity photograph" loading="lazy">
 </figure>
 <figure class="outreach-carousel-slide">
-<img src="images/5.ScienceDissemination1.jpg" alt="Scientific outreach activity photograph" loading="lazy">
+<img src="images/5.ScienceDissemination1.png" alt="Scientific outreach activity photograph" loading="lazy">
 </figure>
 <figure class="outreach-carousel-slide">
-<img src="images/5.ScienceDissemination3.jpg" alt="Scientific outreach activity photograph" loading="lazy">
+<img src="images/5.ScienceDissemination3.png" alt="Scientific outreach activity photograph" loading="lazy">
 </figure>
 <figure class="outreach-carousel-slide">
-<img src="images/5.ScienceDissemination6.jpg" alt="Scientific outreach activity photograph" loading="lazy">
+<img src="images/5.ScienceDissemination6.png" alt="Scientific outreach activity photograph" loading="lazy">
 </figure>
 </div>
 </div>
