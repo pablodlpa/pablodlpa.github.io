@@ -4,7 +4,7 @@ subtitle: ""
 ---
 
 ::: {.lead-copy}
-Take a closer look at the **questions that drive my research** and **the projects through which I explore them!**.
+Take a closer look at the **questions that drive my research** and **the projects through which I explore them!**
 :::
 
 ## Community assembly and subarctic biodiversity
@@ -132,7 +132,7 @@ Research stay with [**Prof. Ilya Maclean**](https://experts.exeter.ac.uk/3165-il
 :::
 ::: {.timeline-entry}
 **2021–2022 · University of Helsinki, Finland**  
-Research stay with [**Dr Helena Wirta**](https://www.umu.se/en/staff/helena-wirta/?flik=presentation), gaining hands-on experience in DNA metabarcoding, DNA extraction, qPCR, and sequencing library preparation. This collaboration also contributed to research on honeybee-associated ecological interactions (see research listed above)
+Research stay with [**Dr Helena Wirta**](https://www.umu.se/en/staff/helena-wirta/?flik=presentation), gaining hands-on experience in DNA metabarcoding, DNA extraction, qPCR, and sequencing library preparation. This collaboration also contributed to research on honeybee-associated ecological interactions.
 
 **Related work:** [The role of seasonality in shaping honeybee interactions](https://doi.org/10.1002/ece3.10580) · [Latitudinal richness gradients in honeybee interaction partners](https://doi.org/10.1186/s12862-025-02363-1)
 
